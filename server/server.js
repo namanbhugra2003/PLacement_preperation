@@ -28,6 +28,10 @@ app.use(express.json());
 
 // 📦 Routes
 app.use("/api/auth", authRoutes);
+// server.js or index.js
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Backend is working!' });
+});
 
 // 🔥 Start server
 app.listen(PORT, () => {
