@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 // Configure Axios to point at backend and send cookies
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}`;
 axios.defaults.withCredentials = true;
 
 export default function Projects() {

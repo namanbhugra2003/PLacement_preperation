@@ -19,7 +19,7 @@ export default function Dashboard() {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        await axios.get("http://localhost:5000/api/auth/me", {
+        await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/me`, {
           withCredentials: true,
         });
       } catch (err) {
