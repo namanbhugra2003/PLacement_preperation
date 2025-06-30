@@ -29,6 +29,13 @@ app.use(express.json());
 // 📦 Routes
 app.use("/api/auth", authRoutes);
 // server.js or index.js
+
+// In Express (Node.js)
+app.get('/api/ping', (req, res) => {
+  res.json({ message: 'pong from backend' });
+});
+
+
 app.get('/api/test', (req, res) => {
   res.json({ message: 'Backend is working!' });
 });

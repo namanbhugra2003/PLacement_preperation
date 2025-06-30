@@ -2,6 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 axios.withCredentials=true;
+useEffect(() => {
+  fetch(`${process.env.REACT_APP_API_URL}/api/ping`)
+    .then(res => res.json())
+    .then(data => console.log('✅ Connected:', data))
+    .catch(err => console.error('❌ Not connected:', err));
+}, []);
+
+
 export default function Home() {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(null); // null = loading
