@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI, {
 // 🌐 Middlewares
 app.use(
   cors({
-    origin: "https://placement-preperation-btkx50twn-namans-projects-8cc1bced.vercel.app", // frontend origin
+    origin: "https://https://placement-preperation-jiafivyka-namans-projects-8cc1bced.vercel.app/", // frontend origin
     credentials: true, // allow cookies
   })
 );
