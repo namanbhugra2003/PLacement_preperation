@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI, {
 // 🌐 Middlewares
 app.use(
   cors({
-    origin: "placement-preperation.vercel.app", // frontend origin
+    origin: "https://placement-preperation.vercel.app", // frontend origin
    
  
     credentials: true, // allow cookies
