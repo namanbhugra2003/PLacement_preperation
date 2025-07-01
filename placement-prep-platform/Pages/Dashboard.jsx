@@ -20,7 +20,7 @@ export default function Dashboard() {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/me`, {
+        await axios.get(`https://get-your-placement.onrender.com/api/auth/me`, {
           withCredentials: true,
         });
       } catch (err) {
