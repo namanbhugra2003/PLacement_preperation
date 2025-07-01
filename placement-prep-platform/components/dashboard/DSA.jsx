@@ -31,7 +31,7 @@ export default function DSA() {
   }, []);
 
   const markSolved = (q) => {
-    axios.post("`${process.env.REACT_APP_API_URL}/api/auth/dsa/solve`, { question: q }) 
+    axios.post(`${process.env.REACT_APP_API_URL}/api/auth/dsa/solve`, { question: q }) 
       .then(({ data }) => {
         setSolved(data.solved);
         setUnsolved(data.unsolved);
