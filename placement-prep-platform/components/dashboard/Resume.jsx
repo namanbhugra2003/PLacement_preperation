@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}`;
+
 axios.defaults.withCredentials = true;
 
 export default function Resume() {
@@ -16,7 +16,7 @@ export default function Resume() {
   useEffect(() => {
     const fetchResumes = async () => {
       try {
-        const { data } = await axios.get("/api/auth/resumes");
+        const { data } = await axios.get("https://get-your-placement.onrender.com/api/auth/resumes");
         setAllResumes(data);
         // Find this user's resume
         const me = data.find((r) => r.isMine);
@@ -46,13 +46,13 @@ export default function Resume() {
       let res;
       if (myResume) {
         // Update existing
-        res = await axios.put(`/api/auth/resumes/${myResume._id}`, form);
+        res = await axios.put(`https://get-your-placement.onrender.com/api/auth/resumes/${myResume._id}`, form);
       } else {
         // Create new
-        res = await axios.post("/api/auth/resumes", form);
+        res = await axios.post("https://get-your-placement.onrender.com/api/auth/resumes", form);
       }
       // Refresh list
-      const updated = await axios.get("/api/auth/resumes");
+      const updated = await axios.get("https://get-your-placement.onrender.com/api/auth/resumes");
       setAllResumes(updated.data);
       const me = updated.data.find((r) => r.isMine);
       setMyResume(me);
