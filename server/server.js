@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGO_URI, {
 app.use(
   cors({
   origin: [
- "https://p-lacement-preperation-qhd29da07-namans-projects-8cc1bced.vercel.app",
+ "https://p-lacement-preperation-kgtbod00y-namans-projects-8cc1bced.vercel.app",
   "http://localhost:3000" // for local dev if needed
 ],
 
