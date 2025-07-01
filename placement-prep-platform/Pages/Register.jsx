@@ -27,7 +27,7 @@ export default function Register() {
 
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/register`,
+        "https://get-your-placement.onrender.com/api/auth/register",
         form,
         { withCredentials: true }
       );
