@@ -7,7 +7,7 @@ import {
 } from "recharts";
 
 // Ensure requests include your auth cookie
-axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}`;
+
 axios.defaults.withCredentials = true;
 
 const COLORS = ["#34D399", "#FBBF24", "#EF4444"];
