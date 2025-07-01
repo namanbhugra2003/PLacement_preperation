@@ -2,14 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const authRoutes = require("./routes/auth"); // make sure this path matches
-require("dotenv").config(); // ✅ Must be called before accessing process.env
+const authRoutes = require("./routes/auth");
+require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-app.set("trust proxy", 1); // Trust Render's reverse proxy
 
-// 🔗 MongoDB Connection
+app.set("trust proxy", 1); // Trust proxy for secure cookies
+
+// MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -17,33 +18,26 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("✅ MongoDB connected"))
 .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-// 🌐 Middlewares
-app.use(
-  cors({
+// Middleware
+app.use(cors({
   origin: [
-"https://get-your-placement-frontend.onrender.com"
-],
-
-   
- 
-    credentials: true, // allow cookies
-  })
-);
+    "https://get-your-placement-frontend.onrender.com",
+    "http://localhost:3000" // Optional: for local dev
+  ],
+  credentials: true,
+}));
 app.use(cookieParser());
 app.use(express.json());
 
-// 📦 Routes
+// Routes
 app.use("/api/auth", authRoutes);
-// server.js or index.js
 
-
-
-
-app.get('/api/test', (req, res) => {
-  res.json({ message: 'Backend is working!' });
+// Test route
+app.get("/api/test", (req, res) => {
+  res.json({ message: "Backend is working!" });
 });
 
-// 🔥 Start server
+// Start Server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
