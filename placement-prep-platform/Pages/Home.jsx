@@ -10,7 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/auth/check-auth`, { withCredentials: true })
+      .get(`https://get-your-placement.onrender.com/api/auth/check-auth`, { withCredentials: true })
       .then((res) => {
         setIsLoggedIn(res.data.isLoggedIn);
       })
