@@ -23,7 +23,7 @@ export default function InterviewExperience() {
     if (!company || !candidate || !description) return;
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/interviews`, formData);
+      const res = await axios.post(`https://get-your-placement.onrender.com/api/auth/interviews`, formData);
       setExperiences([res.data, ...experiences]);
       setFormData({ company: "", candidate: "", description: "" });
     } catch (err) {
