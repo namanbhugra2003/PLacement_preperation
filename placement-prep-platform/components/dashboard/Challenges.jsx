@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+axios.withCredentials=true;
 
 export default function Challenges() {
   const [todayChallenge, setTodayChallenge] = useState(null);
