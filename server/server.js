@@ -19,7 +19,11 @@ mongoose.connect(process.env.MONGO_URI, {
 // 🌐 Middlewares
 app.use(
   cors({
-    origin: "https://placement-preperation.vercel.app", // frontend origin
+  origin: [
+ "https://p-lacement-preperation-qhd29da07-namans-projects-8cc1bced.vercel.app",
+  "http://localhost:3000" // for local dev if needed
+],
+
    
  
     credentials: true, // allow cookies
