@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+axios.withCredentials=true;
 
 import Sidebar from "../components/Sidebar";
 import DSA from "../components/dashboard/DSA";
