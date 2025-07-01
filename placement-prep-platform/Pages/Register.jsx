@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+axios.withCredentials=true;
 
 export default function Register() {
   const navigate = useNavigate();
