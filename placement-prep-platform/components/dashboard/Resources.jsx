@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}`;
 axios.defaults.withCredentials = true;
 export default function Resources() {
   const [resources, setResources] = useState([]);
@@ -8,7 +7,7 @@ export default function Resources() {
 
   // Fetch all resources
   useEffect(() => {
-    axios.get("/api/auth/resources")
+    axios.get("https://get-your-placement.onrender.com/api/auth/resources")
       .then(res => setResources(res.data))
       .catch(err => console.error("Error fetching resources:", err));
   }, []);
@@ -18,7 +17,7 @@ export default function Resources() {
     if (!formData.title || !formData.link || !formData.description) return;
 
     try {
-      const res = await axios.post("/api/auth/resources", formData);
+      const res = await axios.post("https://get-your-placement.onrender.com/api/auth/resources", formData);
       setResources([res.data, ...resources]);
       setFormData({ title: "", link: "", description: "" });
     } catch (err) {
