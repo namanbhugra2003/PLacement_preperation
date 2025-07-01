@@ -398,4 +398,9 @@ router.get("/check-auth", authMiddleware, (req, res) => {
   res.json({ isLoggedIn: true, user: req.user });
 });
 
+router.get("/debug-cookie", (req, res) => {
+  res.json({ cookies: req.cookies });
+});
+
+
 module.exports = router;
