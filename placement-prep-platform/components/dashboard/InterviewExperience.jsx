@@ -12,7 +12,7 @@ export default function InterviewExperience() {
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/api/auth/interviews`)
+    axios.get(`https://get-your-placement.onrender.com/api/auth/interviews`)
       .then(res => setExperiences(res.data))
       .catch(err => console.error("Error fetching experiences:", err));
   }, []);
