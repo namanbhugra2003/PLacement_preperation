@@ -21,7 +21,7 @@ export default function DSA() {
 
   useEffect(() => {
     axios
-      .get("/api/auth/dsa")
+      .get(`${process.env.REACT_APP_API_URL}/api/auth/dsa`) 
       .then(({ data }) => {
         setSolved(data.solved);
         setUnsolved(data.unsolved);
@@ -31,7 +31,7 @@ export default function DSA() {
   }, []);
 
   const markSolved = (q) => {
-    axios.post("/api/auth/dsa/solve", { question: q })
+    axios.post("`${process.env.REACT_APP_API_URL}/api/auth/dsa/solve`, { question: q }) 
       .then(({ data }) => {
         setSolved(data.solved);
         setUnsolved(data.unsolved);
@@ -40,7 +40,7 @@ export default function DSA() {
   };
 
   const markUnsolve = (q) => {
-    axios.post("/api/auth/dsa/unsolve", { question: q })
+    axios.post(`${process.env.REACT_APP_API_URL}/api/auth/dsa/unsolve`, { question: q })
       .then(({ data }) => {
         setSolved(data.solved);
         setUnsolved(data.unsolved);
