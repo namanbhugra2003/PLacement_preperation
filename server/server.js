@@ -7,6 +7,7 @@ require("dotenv").config(); // ✅ Must be called before accessing process.env
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+app.set("trust proxy", 1); // Trust Render's reverse proxy
 
 // 🔗 MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
