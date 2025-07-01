@@ -10,7 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("/api/auth/check-auth", { withCredentials: true })
+      .get(`${process.env.REACT_APP_API_URL}/api/auth/check-auth`, { withCredentials: true })
       .then((res) => {
         setIsLoggedIn(res.data.isLoggedIn);
       })
