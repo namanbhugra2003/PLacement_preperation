@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 // Configure Axios to point at backend and send cookies
-axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}`;
+
 axios.defaults.withCredentials = true;
 
 export default function Projects() {
@@ -14,7 +14,7 @@ export default function Projects() {
 
   // Fetch all projects on mount
   useEffect(() => {
-    axios.get("/api/auth/projects")
+    axios.get("https://get-your-placement.onrender.com/api/auth/projects")
       .then(({ data }) => setProjects(data))
       .catch((err) => console.error("Fetch projects error:", err));
   }, []);
@@ -31,7 +31,7 @@ export default function Projects() {
       return;
     }
     try {
-      const { data } = await axios.post("/api/auth/projects", newProject);
+      const { data } = await axios.post("https://get-your-placement.onrender.com/api/auth/projects", newProject);
       setProjects((prev) => [data, ...prev]);
       setNewProject({ name: "", author: "", github: "", description: "" });
     } catch (err) {
