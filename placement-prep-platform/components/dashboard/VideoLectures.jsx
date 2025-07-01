@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}`;
+
 axios.defaults.withCredentials = true;
 export default function VideoLectures() {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     axios
-      .get("/api/auth/videos") // adjust path if needed
+      .get("https://get-your-placement.onrender.com/api/auth/videos") // adjust path if needed
       .then((res) => setVideos(res.data))
       .catch((err) => console.error("Failed to load videos:", err));
   }, []);
