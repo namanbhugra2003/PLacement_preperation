@@ -12,7 +12,7 @@ export default function InterviewExperience() {
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   useEffect(() => {
-    axios.get("/api/auth/interviews")
+    axios.get(`${process.env.REACT_APP_API_URL}/api/auth/interviews`)
       .then(res => setExperiences(res.data))
       .catch(err => console.error("Error fetching experiences:", err));
   }, []);
@@ -23,7 +23,7 @@ export default function InterviewExperience() {
     if (!company || !candidate || !description) return;
 
     try {
-      const res = await axios.post("/api/auth/interviews", formData);
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/interviews`, formData);
       setExperiences([res.data, ...experiences]);
       setFormData({ company: "", candidate: "", description: "" });
     } catch (err) {
