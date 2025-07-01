@@ -9,7 +9,7 @@ export default function Challenges() {
   useEffect(() => {
     const fetchDailyChallenge = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/dsa/daily`);
+        const res = await axios.get(`https://get-your-placement.onrender.com/api/auth/dsa/daily`);
         setTodayChallenge(res.data.today);
         setPreviousChallenges(res.data.previous);
       } catch (err) {
