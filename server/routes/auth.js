@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const nodemailer = require("nodemailer");
+const Otp = require("../models/Otp");
 const User = require("../models/User");
 const DSAProgress = require("../models/DSAProgress");
 const Project = require("../models/Project");
@@ -12,6 +14,17 @@ const InterviewModel = require("../models/InterviewExperience");
 const Video = require("../models/Video");
 
 const authMiddleware = require("../middleware/authMiddleware");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+
+
 
 // ==================== AUTH ROUTES ====================
 
@@ -57,19 +70,57 @@ router.post("/logout", (req, res) => {
   });
   res.status(200).json({ message: "Logged out successfully" });
 });
-
-// REGISTER
+// register route
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
+
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser)
       return res.status(400).json({ message: "User already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    const newUser = new User({ name, email, password: hashedPassword });
+    // Delete old OTPs
+    await Otp.deleteMany({ email });
+
+    // Save new OTP
+    await Otp.create({ email, otp });
+
+    // Send OTP via email
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Verify your email - OTP",
+      html: `<h2>Hello ${name},</h2><p>Your OTP is <b>${otp}</b></p><p>It will expire in 5 minutes.</p>`,
+    });
+
+    res.status(200).json({
+      message: "OTP sent to your email",
+      tempUser: { name, email, password: hashedPassword }, // store this temporarily on frontend
+    });
+  } catch (err) {
+    console.error("Register error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+// verify otp route 
+router.post("/verify-otp", async (req, res) => {
+  const { name, email, password, otp } = req.body;
+
+  try {
+    const validOtp = await Otp.findOne({ email });
+
+    if (!validOtp || validOtp.otp !== otp) {
+      return res.status(400).json({ message: "Invalid or expired OTP" });
+    }
+
+    // Create user after OTP is valid
+    const newUser = new User({ name, email, password });
     await newUser.save();
+
+    await Otp.deleteOne({ email });
 
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
@@ -84,14 +135,16 @@ router.post("/register", async (req, res) => {
       })
       .status(201)
       .json({
-        message: "User registered successfully",
+        message: "OTP verified and user registered",
         user: { name: newUser.name, email: newUser.email },
       });
   } catch (err) {
-    console.error("Register error:", err);
+    console.error("OTP verify error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
+
+
 
 // ==================== PROFILE ROUTES ====================
 
