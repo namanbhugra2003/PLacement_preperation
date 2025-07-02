@@ -1,30 +1,48 @@
-// src/pages/Login.jsx
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-axios.withCredentials=true;
+
+axios.defaults.withCredentials = true;
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setErrorMsg("");
+    setLoading(true);
+
     try {
       const res = await axios.post(
         `https://get-your-placement.onrender.com/api/auth/login`,
         { email, password },
-        { withCredentials: true } // Send cookie to server
+        { withCredentials: true }
       );
 
-      if (res.data.message === "Login successful") {
+      // More robust success check
+      if (
+        res.status === 200 &&
+        (res.data?.message === "Login successful" || res.data?.token)
+      ) {
         navigate("/dashboard");
+      } else {
+        setErrorMsg("Unexpected server response");
       }
     } catch (err) {
       console.error(err);
-      setErrorMsg("Invalid email or password");
+      if (err.response?.status === 401) {
+        setErrorMsg("Invalid email or password");
+      } else if (err.response?.data?.message) {
+        setErrorMsg(err.response.data.message);
+      } else {
+        setErrorMsg("Something went wrong. Please try again.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -61,14 +79,18 @@ export default function Login() {
               required
             />
           </div>
+
           {errorMsg && <p className="text-red-500 text-sm mb-4">{errorMsg}</p>}
+
           <button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold"
+            disabled={loading}
           >
-            Log In
+            {loading ? "Logging in..." : "Log In"}
           </button>
         </form>
+
         <p className="mt-4 text-sm text-center">
           Don’t have an account?{" "}
           <Link to="/register" className="text-blue-400 hover:underline">
